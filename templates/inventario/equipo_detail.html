@@ -1,0 +1,253 @@
+﻿{% extends "base.html" %}
+
+{% block title %}{{ equipo.nombre }} | Galería y Ficha Técnica UDC{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-9">
+        <div class="card shadow-sm border-0 mb-4 overflow-hidden">
+            <div class="card-header bg-white py-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-secondary">Equipo de Laboratorio</span>
+                    <h4 class="fw-bold mb-0 text-dark">{{ equipo.nombre }}</h4>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-primary btn-sm fw-semibold shadow-sm" data-bs-toggle="modal" data-bs-target="#modalSubirFotos">
+                        <i class="bi bi-cloud-arrow-up me-1"></i> + Subir Fotos a este Equipo
+                    </button>
+                    {% if user.is_staff or user.is_superuser %}
+                        <a href="/admin/inventario/equipo/{{ equipo.id }}/change/" target="_blank" class="btn btn-outline-secondary btn-sm" title="Editar en Admin">
+                            <i class="bi bi-pencil-square me-1"></i> Editar Admin
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'inventario:equipos_list' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-left me-1"></i> Volver al Catálogo
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <div class="row g-4 mb-4">
+                    <!-- Visor de Foto Principal / Destacada -->
+                    <div class="col-md-5 text-center">
+                        {% if equipo.imagen_destacada %}
+                            <div class="position-relative bg-light rounded-3 p-2 border">
+                                <img id="imagenVisorPrincipal" src="{{ equipo.imagen_destacada.url }}" alt="{{ equipo.nombre }}" 
+                                     class="img-fluid rounded-3 shadow-sm w-100" style="max-height: 330px; object-fit: contain; background: #fafafa;">
+                                <small id="pieDeFoto" class="text-secondary d-block mt-2 fw-semibold">Fotografía Principal / Portada</small>
+                            </div>
+                        {% else %}
+                            <div class="bg-light rounded-3 d-flex flex-column align-items-center justify-content-center p-5 text-muted border" style="height: 280px;">
+                                <i class="bi bi-camera fs-1 mb-2 opacity-50"></i>
+                                <span class="fw-semibold">Sin fotografías aún</span>
+                                <button type="button" class="btn btn-sm btn-outline-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalSubirFotos">
+                                    <i class="bi bi-plus-lg me-1"></i> Subir primera foto
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Ficha técnica del equipo -->
+                    <div class="col-md-7">
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <span class="text-muted small fw-semibold d-block">Marca / Fabricante:</span>
+                                <strong class="fs-6 text-primary">{{ equipo.marca.nombre|default:"Genérica / No especificada" }}</strong>
+                            </div>
+                            <div class="col-sm-6">
+                                <span class="text-muted small fw-semibold d-block">Estado Operativo:</span>
+                                <span class="badge {% if equipo.estado == 'Operativo' or equipo.estado == 'Sin uso' %}bg-success{% elif equipo.estado == 'En mantenimiento' %}bg-warning text-dark{% else %}bg-secondary{% endif %} fs-6">
+                                    {{ equipo.estado }}
+                                </span>
+                            </div>
+                            <div class="col-sm-6">
+                                <span class="text-muted small fw-semibold d-block">Cantidad disponible:</span>
+                                <strong class="fs-6">{{ equipo.cantidad }} unidad(es)</strong>
+                            </div>
+                            <div class="col-sm-6">
+                                <span class="text-muted small fw-semibold d-block">Ubicación Actual:</span>
+                                <strong>{{ equipo.espacio.nombre }}</strong> &bull; <span class="text-muted">{{ equipo.espacio.sede.nombre }}</span>
+                                {% if equipo.ubicacion_interna %}
+                                    <div class="small text-secondary"><i class="bi bi-geo-alt"></i> {{ equipo.ubicacion_interna }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-6">
+                                <span class="text-muted small fw-semibold d-block">Placa de Activo UDC:</span>
+                                <span class="font-monospace fw-bold text-dark">{{ equipo.placa_udc|default:"No asignada" }}</span>
+                            </div>
+                            <div class="col-sm-6">
+                                <span class="text-muted small fw-semibold d-block">Número de Serie:</span>
+                                <span class="font-monospace">{{ equipo.numero_serie|default:"No registrado" }}</span>
+                            </div>
+                        </div>
+
+                        {% if equipo.observaciones %}
+                        <div class="mt-3">
+                            <span class="text-muted small fw-semibold d-block">Observaciones:</span>
+                            <p class="mb-0 bg-light p-2 rounded text-secondary small">{{ equipo.observaciones }}</p>
+                        </div>
+                        {% endif %}
+
+                        <!-- Botón directo de carga desde el sitio -->
+                        <div class="mt-4 pt-3 border-top">
+                            <button type="button" class="btn btn-outline-primary btn-sm fw-semibold w-100 py-2" data-bs-toggle="modal" data-bs-target="#modalSubirFotos">
+                                <i class="bi bi-camera-fill me-1"></i> Añadir Fotografías a este Equipo (Múltiples archivos a la vez)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN: GALERÍA DE FOTOGRAFÍAS -->
+                <div class="border-top pt-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold text-dark mb-0">
+                            <i class="bi bi-images text-primary me-2"></i>Galería Fotográfica
+                            <span class="badge bg-primary text-white ms-1">{{ equipo.total_imagenes }} foto(s)</span>
+                        </h5>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalSubirFotos">
+                            <i class="bi bi-plus-lg me-1"></i> Subir más fotos
+                        </button>
+                    </div>
+
+                    <div class="row g-3">
+                        <!-- Fotografía Base si existe -->
+                        {% if equipo.fotografia %}
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <div class="card h-100 border text-center p-2 rounded-3 shadow-sm position-relative">
+                                <img src="{{ equipo.fotografia.url }}" class="rounded mb-2" style="height: 120px; width: 100%; object-fit: cover; cursor: pointer;"
+                                     onclick="cambiarFoto('{{ equipo.fotografia.url }}', 'Fotografía Base del Equipo')" title="Clic para ampliar en visor">
+                                <small class="text-truncate d-block fw-semibold text-primary mb-1">Foto Base Principal</small>
+                                <span class="badge bg-primary-subtle text-primary border" style="font-size: 10px;">Portada</span>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- Fotografías de la galería -->
+                        {% for img_obj in equipo.imagenes.all %}
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <div class="card h-100 border p-2 rounded-3 shadow-sm d-flex flex-column justify-content-between position-relative">
+                                <div>
+                                    <img src="{{ img_obj.imagen.url }}" class="rounded mb-2" style="height: 120px; width: 100%; object-fit: cover; cursor: pointer;"
+                                         onclick="cambiarFoto('{{ img_obj.imagen.url }}', '{{ img_obj.descripcion|default:'Fotografía del Equipo' }}')" title="Clic para ampliar en visor">
+                                    <small class="text-truncate d-block fw-semibold text-dark mb-1">
+                                        {{ img_obj.descripcion|default:"Detalle del Equipo" }}
+                                    </small>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top gap-1">
+                                    {% if img_obj.es_principal %}
+                                        <span class="badge bg-warning text-dark border" style="font-size: 10px;">Portada</span>
+                                    {% else %}
+                                        <form method="post" action="{% url 'inventario:marcar_foto_principal' img_obj.id %}" class="d-inline m-0 p-0">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-link p-0 text-decoration-none text-muted" style="font-size: 11px;" title="Fijar como foto principal de portada">
+                                                <i class="bi bi-star"></i> Portada
+                                            </button>
+                                        </form>
+                                    {% endif %}
+
+                                    {% if user.is_staff or user.is_superuser %}
+                                        <form method="post" action="{% url 'inventario:eliminar_foto_equipo' img_obj.id %}" class="d-inline m-0 p-0" onsubmit="return confirm('¿Seguro que deseas eliminar esta fotografía?');">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-link p-0 text-danger text-decoration-none" style="font-size: 11px;" title="Eliminar foto">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                            {% if not equipo.fotografia %}
+                            <div class="col-12">
+                                <div class="alert alert-light border text-center py-4 text-muted">
+                                    <i class="bi bi-images fs-3 d-block mb-2 text-secondary"></i>
+                                    Este equipo no tiene fotografías aún en el sistema.
+                                    <div class="mt-2">
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalSubirFotos">
+                                            <i class="bi bi-cloud-arrow-up me-1"></i> Subir fotografías ahora
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Auditoría -->
+                <div class="mt-4 pt-3 border-top d-flex justify-content-between align-items-center text-muted small bg-light p-3 rounded">
+                    <div>
+                        <i class="bi bi-person-check text-success me-1"></i>
+                        Registrado por: <strong>{{ equipo.creado_por.username|default:"Sistema" }}</strong>
+                    </div>
+                    <div>
+                        <i class="bi bi-clock-history me-1"></i>
+                        Fecha de Registro: {{ equipo.fecha_registro|date:"d/m/Y H:i"|default:"Inicial" }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA SUBIR MÚLTIPLES FOTOGRAFÍAS DIRECTAMENTE DESDE EL SITIO -->
+<div class="modal fade" id="modalSubirFotos" tabindex="-1" aria-labelledby="modalSubirFotosLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4">
+            <div class="modal-header bg-primary text-white" style="background: linear-gradient(135deg, #0a3d62 0%, #1e5f8a 100%) !important;">
+                <h5 class="modal-title fw-bold" id="modalSubirFotosLabel">
+                    <i class="bi bi-cloud-arrow-up me-2"></i>Subir Fotografías al Equipo
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form method="post" action="{% url 'inventario:subir_fotos_equipo' equipo.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body p-4">
+                    <p class="text-muted small mb-3">
+                        Equipo: <strong class="text-dark">{{ equipo.nombre }}</strong> ({{ equipo.espacio.nombre }})
+                    </p>
+
+                    <div class="mb-3">
+                        <label for="inputImagenesMultiples" class="form-label fw-bold">
+                            Seleccionar Archivos de Imagen:
+                        </label>
+                        <input type="file" name="imagenes" id="inputImagenesMultiples" class="form-control" 
+                               multiple accept="image/*" required style="padding: 10px; border: 2px dashed #0a3d62;">
+                        <small class="text-muted d-block mt-1">
+                            <i class="bi bi-info-circle text-primary me-1"></i>
+                            <strong>¡Puedes elegir varias imágenes a la vez!</strong> Mantén presionada la tecla <code>Ctrl</code> o <code>Shift</code> al seleccionar archivos.
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputDescripcionFotos" class="form-label fw-semibold small text-muted">
+                            Descripción / Epígrafe (opcional):
+                        </label>
+                        <input type="text" name="descripcion" id="inputDescripcionFotos" class="form-control" 
+                               placeholder="Ej: Vista frontal, Placa de activo UDC, Accesorios...">
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary fw-semibold px-4" style="background-color: #0a3d62; border-color: #0a3d62;">
+                        <i class="bi bi-cloud-upload me-1"></i> Subir Fotografías
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function cambiarFoto(url, descripcion) {
+    const visor = document.getElementById('imagenVisorPrincipal');
+    const pie = document.getElementById('pieDeFoto');
+    if (visor) {
+        visor.src = url;
+    }
+    if (pie) {
+        pie.textContent = descripcion;
+    }
+}
+</script>
+{% endblock %}

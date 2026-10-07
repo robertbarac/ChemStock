@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+
+<html lang="es-co" dir="ltr">
+<head>
+<title>Neveras de laboratorio (Electrolux) - Cant: 4 | Modificar Equipo | GIQYMA Inventario</title>
+<meta name="color-scheme" content="light dark" />
+<link rel="stylesheet" href="/static/admin/css/base.css" >
+
+  <link rel="stylesheet" href="/static/admin/css/dark_mode.css" >
+  <script src="/static/admin/js/theme.js" ></script>
+
+
+  <link rel="stylesheet" href="/static/admin/css/nav_sidebar.css" >
+  <script src="/static/admin/js/nav_sidebar.js" defer ></script>
+
+
+  
+  <link rel="stylesheet" href="/static/admin/css/widgets.css" >
+  <link rel="stylesheet" href="/static/admin/css/forms.css" >
+
+
+
+<script src="/admin/jsi18n/" ></script>
+<script src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script src="/static/admin/js/jquery.init.js"></script>
+<script src="/static/admin/js/core.js"></script>
+<script src="/static/admin/js/inlines.js"></script>
+<script src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script src="/static/admin/js/actions.js"></script>
+<script src="/static/admin/js/urlify.js"></script>
+<script src="/static/admin/js/prepopulate.js"></script>
+<script src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/admin/css/responsive.css" >
+    
+
+<meta name="robots" content="NONE,NOARCHIVE">
+</head>
+
+<body class=" app-inventario model-equipo change-form"
+  data-admin-utc-offset="-18000"
+  data-admin-server-timezone="America/Bogota">
+<a href="#content-start" class="skip-to-content-link">Saltar al contenido principal</a>
+<!-- Container -->
+<div id="container">
+
+    
+    <!-- Header -->
+    
+      <header id="header">
+        <div id="branding">
+        
+<div id="site-name"><a href="/admin/">GIQYMA - Inventario de Laboratorios UDC</a></div>
+
+
+        </div>
+        
+        
+        <div id="user-tools">
+            
+                Bienvenido/a,
+                <strong>admin</strong>.
+            
+            
+                
+                    <a href="/">Ver el sitio</a> /
+                
+                
+                    
+                    
+                
+                
+                <a href="/admin/password_change/">Cambiar contraseña</a> /
+                
+                <form id="logout-form" method="post" action="/admin/logout/">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="OgDWFfCPeHNGJBkpKsBiHXO8bivZhnFIgLpQbMWZRC2369cQaNusp7vY7kG9zzfp">
+                    <button type="submit">Terminar sesión</button>
+                </form>
+                
+<button class="theme-toggle">
+  <span class="visually-hidden theme-label-when-auto">Cambiar tema (tema actual: automático)</span>
+  <span class="visually-hidden theme-label-when-light">Cambiar tema (tema actual: claro)</span>
+  <span class="visually-hidden theme-label-when-dark">Cambiar tema (tema actual: oscuro)</span>
+  <svg aria-hidden="true" class="theme-icon-when-auto">
+    <use xlink:href="#icon-auto" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-dark">
+    <use xlink:href="#icon-moon" />
+  </svg>
+  <svg aria-hidden="true" class="theme-icon-when-light">
+    <use xlink:href="#icon-sun" />
+  </svg>
+</button>
+
+            
+        </div>
+        
+        
+        
+      </header>
+    
+    <!-- END Header -->
+    
+      <nav aria-label="Guía-rastro">
+        
+<ol class="breadcrumbs">
+<li><a href="/admin/">Inicio</a></li>
+<li><a href="/admin/inventario/">Inventario</a></li>
+<li><a href="/admin/inventario/equipo/">Equipos de Laboratorio</a></li>
+<li aria-current="page">Neveras de laboratorio (Electrolux) - Cant: 4</li>
+</ol>
+
+      </nav>
+    
+    
+
+    <div class="main" id="main">
+      
+        
+          
+<button class="sticky toggle-nav-sidebar" id="toggle-nav-sidebar" aria-label="Activar navegación"></button>
+<nav class="sticky" id="nav-sidebar" aria-label="Barra lateral">
+  <input type="search" id="nav-filter"
+         placeholder="Empiece a escribir para filtrar…"
+         aria-label="Filtrar elementos de navegación">
+  
+
+
+  
+    <div class="app-auth module">
+      <table>
+        <caption>
+          <a href="/admin/auth/" class="section">Autenticación y autorización</a>
+        </caption>
+        <thead class="visually-hidden">
+          <tr>
+            <th scope="col">Nombre del modelo</th>
+            <th scope="col">Añadir vínculo</th>
+            <th scope="col">Cambiar o ver el enlace de la lista</th>
+          </tr>
+        </thead>
+        
+          
+            <tr class="model-group">
+              <th scope="row" id="auth-group">
+                
+                  <a href="/admin/auth/group/">Grupos</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/auth/group/add/" class="addlink" aria-describedby="auth-group">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+          
+            <tr class="model-user">
+              <th scope="row" id="auth-user">
+                
+                  <a href="/admin/auth/user/">Usuarios</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/auth/user/add/" class="addlink" aria-describedby="auth-user">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+    <div class="app-inventario module current-app">
+      <table>
+        <caption>
+          <a href="/admin/inventario/" class="section">Inventario</a>
+        </caption>
+        <thead class="visually-hidden">
+          <tr>
+            <th scope="col">Nombre del modelo</th>
+            <th scope="col">Añadir vínculo</th>
+            <th scope="col">Cambiar o ver el enlace de la lista</th>
+          </tr>
+        </thead>
+        
+          
+            <tr class="model-equipo current-model">
+              <th scope="row" id="inventario-equipo">
+                
+                  <a href="/admin/inventario/equipo/" aria-current="page">Equipos de Laboratorio</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/inventario/equipo/add/" class="addlink" aria-describedby="inventario-equipo">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+          
+            <tr class="model-imagenequipo">
+              <th scope="row" id="inventario-imagenequipo">
+                
+                  <a href="/admin/inventario/imagenequipo/">Galería de Fotografías del Equipo</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/inventario/imagenequipo/add/" class="addlink" aria-describedby="inventario-imagenequipo">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+          
+            <tr class="model-marca">
+              <th scope="row" id="inventario-marca">
+                
+                  <a href="/admin/inventario/marca/">Marcas</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/inventario/marca/add/" class="addlink" aria-describedby="inventario-marca">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+          
+            <tr class="model-material">
+              <th scope="row" id="inventario-material">
+                
+                  <a href="/admin/inventario/material/">Materiales e Insumos</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/inventario/material/add/" class="addlink" aria-describedby="inventario-material">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+          
+            <tr class="model-movimiento">
+              <th scope="row" id="inventario-movimiento">
+                
+                  <a href="/admin/inventario/movimiento/">Movimientos de Inventario (Kardex)</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/inventario/movimiento/add/" class="addlink" aria-describedby="inventario-movimiento">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+          
+            <tr class="model-reactivo">
+              <th scope="row" id="inventario-reactivo">
+                
+                  <a href="/admin/inventario/reactivo/">Reactivos, Estándares y Buffers</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/inventario/reactivo/add/" class="addlink" aria-describedby="inventario-reactivo">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+    <div class="app-sedes module">
+      <table>
+        <caption>
+          <a href="/admin/sedes/" class="section">Sedes</a>
+        </caption>
+        <thead class="visually-hidden">
+          <tr>
+            <th scope="col">Nombre del modelo</th>
+            <th scope="col">Añadir vínculo</th>
+            <th scope="col">Cambiar o ver el enlace de la lista</th>
+          </tr>
+        </thead>
+        
+          
+            <tr class="model-espacio">
+              <th scope="row" id="sedes-espacio">
+                
+                  <a href="/admin/sedes/espacio/">Espacios</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/sedes/espacio/add/" class="addlink" aria-describedby="sedes-espacio">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+          
+            <tr class="model-sede">
+              <th scope="row" id="sedes-sede">
+                
+                  <a href="/admin/sedes/sede/">Sedes</a>
+                
+              </th>
+
+              
+                <td><a href="/admin/sedes/sede/add/" class="addlink" aria-describedby="sedes-sede">Añadir</a></td>
+              
+
+              
+            </tr>
+          
+        
+      </table>
+    </div>
+  
+
+
+</nav>
+
+        
+      
+      <main id="content-start" class="content" tabindex="-1">
+        
+          
+        
+        <!-- Content -->
+        <div id="content" class="colM">
+          <div class="titles-and-tools">
+            <div class="titles">
+              
+              <h1>Modificar Equipo</h1>
+              <h2>Neveras de laboratorio (Electrolux) - Cant: 4</h2>
+            </div>
+            
+
+  <ul class="object-tools">
+    
+      
+
+<li>
+    
+    <a href="/admin/inventario/equipo/7/history/" class="historylink">Histórico</a>
+</li>
+
+
+
+    
+  </ul>
+
+
+          </div>
+          <div id="content-main">
+<form enctype="multipart/form-data" method="post" id="equipo_form" novalidate><input type="hidden" name="csrfmiddlewaretoken" value="OgDWFfCPeHNGJBkpKsBiHXO8bivZhnFIgLpQbMWZRC2369cQaNusp7vY7kG9zzfp">
+<div>
+
+
+
+
+
+
+
+
+
+  <fieldset class="module aligned ">
+    
+    
+    
+        <div class="form-row field-espacio">
+            
+                
+                <div class="flex-container">
+                    
+                        <label class="required" for="id_espacio">Espacio / Laboratorio:</label>
+                    
+                    
+                    
+                    
+                        
+                        
+                            <div class="related-widget-wrapper" data-model-ref="espacio">
+    <select name="espacio" data-context="available-source" required id="id_espacio">
+  <option value="">- Select an option -</option>
+
+  <option value="1" selected>Laboratorio 109 (CREAD) - Laboratorio</option>
+
+  <option value="4">Laboratorio 105 (San Pablo) - Laboratorio</option>
+
+  <option value="2">Laboratorio 126 (San Pablo) - Laboratorio</option>
+
+  <option value="3">Oficina de Estudiantes (San Pablo) - Oficina</option>
+
+</select>
+    
+        <a class="related-widget-wrapper-link change-related" id="change_id_espacio"
+            data-href-template="/admin/sedes/espacio/__fk__/change/?_to_field=id&amp;_popup=1&amp;_source_model=inventario.equipo"
+            data-popup="yes"
+            title="Cambiar Espacio seleccionado"><img src="/static/admin/img/icon-changelink.svg" alt="" width="24" height="24"></a><a class="related-widget-wrapper-link add-related" id="add_id_espacio"
+            data-popup="yes"
+            href="/admin/sedes/espacio/add/?_to_field=id&amp;_popup=1&amp;_source_model=inventario.equipo"
+            title="Añadir otro Espacio"><img src="/static/admin/img/icon-addlink.svg" alt="" width="24" height="24"></a><a class="related-widget-wrapper-link view-related" id="view_id_espacio"
+             data-href-template="/admin/sedes/espacio/__fk__/change/?_to_field=id"
+             title="Ver seleccionado Espacio"><img src="/static/admin/img/icon-viewlink.svg" alt="" width="24" height="24"></a>
+    
+</div>
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-nombre">
+            
+                
+                <div class="flex-container">
+                    
+                        <label class="required" for="id_nombre">Nombre del Equipo:</label>
+                    
+                    
+                        <div class="help" id="id_nombre_helptext">
+                            <div>Ej: Microscopio con adaptación Axiocam, Espectofotometro UV Visible, Liofilizador</div>
+                        </div>
+                    
+                    
+                    
+                        
+                        
+                            <input type="text" name="nombre" value="Neveras de laboratorio" class="vTextField" maxlength="200" required aria-describedby="id_nombre_helptext" id="id_nombre">
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-marca">
+            
+                
+                <div class="flex-container">
+                    
+                        <label for="id_marca">Marca / Fabricante:</label>
+                    
+                    
+                    
+                    
+                        
+                        
+                            <div class="related-widget-wrapper" data-model-ref="marca">
+    <select name="marca" data-context="available-source" id="id_marca">
+  <option value="">- Select an option -</option>
+
+  <option value="1">AccuStandard</option>
+
+  <option value="7">Biobase</option>
+
+  <option value="3">EMSURE</option>
+
+  <option value="8" selected>Electrolux</option>
+
+  <option value="5">J.TBAKER</option>
+
+  <option value="4">MERCK</option>
+
+  <option value="2">Thermo Scientific</option>
+
+  <option value="6">Zeiss</option>
+
+</select>
+    
+        <a class="related-widget-wrapper-link change-related" id="change_id_marca"
+            data-href-template="/admin/inventario/marca/__fk__/change/?_to_field=id&amp;_popup=1&amp;_source_model=inventario.equipo"
+            data-popup="yes"
+            title="Cambiar Marca seleccionado"><img src="/static/admin/img/icon-changelink.svg" alt="" width="24" height="24"></a><a class="related-widget-wrapper-link add-related" id="add_id_marca"
+            data-popup="yes"
+            href="/admin/inventario/marca/add/?_to_field=id&amp;_popup=1&amp;_source_model=inventario.equipo"
+            title="Añadir otro Marca"><img src="/static/admin/img/icon-addlink.svg" alt="" width="24" height="24"></a><a class="related-widget-wrapper-link delete-related" id="delete_id_marca"
+            data-href-template="/admin/inventario/marca/__fk__/delete/?_to_field=id&amp;_popup=1&amp;_source_model=inventario.equipo"
+            data-popup="yes"
+            title="Eliminar Marca seleccionada/o"><img src="/static/admin/img/icon-deletelink.svg" alt="" width="24" height="24"></a><a class="related-widget-wrapper-link view-related" id="view_id_marca"
+             data-href-template="/admin/inventario/marca/__fk__/change/?_to_field=id"
+             title="Ver seleccionado Marca"><img src="/static/admin/img/icon-viewlink.svg" alt="" width="24" height="24"></a>
+    
+</div>
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-cantidad">
+            
+                
+                <div class="flex-container">
+                    
+                        <label class="required" for="id_cantidad">Cantidad:</label>
+                    
+                    
+                        <div class="help" id="id_cantidad_helptext">
+                            <div>Número de unidades (ej: 4 neveras, 1 espectrofotómetro)</div>
+                        </div>
+                    
+                    
+                    
+                        
+                        
+                            <input type="number" name="cantidad" value="4" class="vIntegerField" required aria-describedby="id_cantidad_helptext" id="id_cantidad">
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-estado">
+            
+                
+                <div class="flex-container">
+                    
+                        <label class="required" for="id_estado">Estado:</label>
+                    
+                    
+                    
+                    
+                        
+                        
+                            <select name="estado" id="id_estado">
+  <option value="Usado" selected>Usado</option>
+
+  <option value="Sin uso">Sin uso</option>
+
+  <option value="Operativo">Operativo</option>
+
+  <option value="En mantenimiento">En mantenimiento</option>
+
+  <option value="Fuera de servicio">Fuera de servicio</option>
+
+</select>
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-fotografia">
+            
+                <fieldset aria-describedby="id_fotografia_helptext"><legend>Fotografía Principal:</legend>
+                <div class="flex-container">
+                    
+                        
+                    
+                    
+                        <div class="help" id="id_fotografia_helptext">
+                            <div>Foto de referencia rápida (también puedes agregar múltiples fotos en la galería abajo)</div>
+                        </div>
+                    
+                    
+                    
+                        
+                        
+                            <input type="file" name="fotografia" accept="image/*" id="id_fotografia">
+                        
+                    
+                </div>
+                </fieldset>
+            
+        </div>
+    
+        <div class="form-row field-placa_udc">
+            
+                
+                <div class="flex-container">
+                    
+                        <label for="id_placa_udc">Placa Activo UDC:</label>
+                    
+                    
+                        <div class="help" id="id_placa_udc_helptext">
+                            <div>Código institucional de activo si aplica</div>
+                        </div>
+                    
+                    
+                    
+                        
+                        
+                            <input type="text" name="placa_udc" class="vTextField" maxlength="50" aria-describedby="id_placa_udc_helptext" id="id_placa_udc">
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-numero_serie">
+            
+                
+                <div class="flex-container">
+                    
+                        <label for="id_numero_serie">Número de Serie:</label>
+                    
+                    
+                    
+                    
+                        
+                        
+                            <input type="text" name="numero_serie" class="vTextField" maxlength="100" id="id_numero_serie">
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-ubicacion_interna">
+            
+                
+                <div class="flex-container">
+                    
+                        <label for="id_ubicacion_interna">Ubicación en el Espacio:</label>
+                    
+                    
+                        <div class="help" id="id_ubicacion_interna_helptext">
+                            <div>Ej: Mesón central, Zona de espectrometría</div>
+                        </div>
+                    
+                    
+                    
+                        
+                        
+                            <input type="text" name="ubicacion_interna" class="vTextField" maxlength="150" aria-describedby="id_ubicacion_interna_helptext" id="id_ubicacion_interna">
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-observaciones">
+            
+                
+                <div class="flex-container">
+                    
+                        <label for="id_observaciones">Observaciones:</label>
+                    
+                    
+                    
+                    
+                        
+                        
+                            <textarea name="observaciones" cols="40" rows="10" class="vLargeTextField" id="id_observaciones">
+</textarea>
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-creado_por">
+            
+                
+                <div class="flex-container">
+                    
+                        <label>Registrado por:</label>
+                    
+                    
+                    
+                    
+                        
+                        
+                            <div class="readonly"><a href="/admin/auth/user/1/change/">admin</a></div>
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-fecha_registro">
+            
+                
+                <div class="flex-container">
+                    
+                        <label>Fecha de Registro:</label>
+                    
+                    
+                    
+                    
+                        
+                        
+                            <div class="readonly">7 de Octubre de 2026 a las 16:44</div>
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+    
+</fieldset>
+
+
+
+
+
+
+
+
+    
+<div class="js-inline-admin-formset inline-group" id="imagenes-group"
+     data-inline-type="tabular"
+     data-inline-formset="{&quot;name&quot;: &quot;#imagenes&quot;, &quot;options&quot;: {&quot;prefix&quot;: &quot;imagenes&quot;, &quot;addText&quot;: &quot;Agregar Fotograf\u00eda del Equipo adicional.&quot;, &quot;deleteText&quot;: &quot;Eliminar&quot;}}">
+  <div class="tabular inline-related last-related">
+<input type="hidden" name="imagenes-TOTAL_FORMS" value="2" id="id_imagenes-TOTAL_FORMS"><input type="hidden" name="imagenes-INITIAL_FORMS" value="0" id="id_imagenes-INITIAL_FORMS"><input type="hidden" name="imagenes-MIN_NUM_FORMS" value="0" id="id_imagenes-MIN_NUM_FORMS"><input type="hidden" name="imagenes-MAX_NUM_FORMS" value="1000" id="id_imagenes-MAX_NUM_FORMS">
+<fieldset class="module " aria-labelledby="imagenes-heading">
+  
+  <h2 id="imagenes-heading" class="inline-heading">
+  
+    Galería de Fotografías del Equipo
+  
+  </h2>
+  
+   
+  <div class="wrapper">
+    <table>
+     <thead><tr>
+       <th class="original"></th>
+     
+       <th class="column-imagen required">Fotografía
+       
+       </th>
+     
+       <th class="column-descripcion">Descripción / Epígrafe
+       <img src="/static/admin/img/icon-unknown.svg" class="help help-tooltip" width="10" height="10" alt="(Ej: Vista frontal, Placa de serie, Accesorios, Conexión trasera)" title="Ej: Vista frontal, Placa de serie, Accesorios, Conexión trasera">
+       </th>
+     
+       <th class="column-es_principal">¿Es la foto principal de portada?
+       
+       </th>
+     
+       <th class="column-foto_preview">Vista previa
+       
+       </th>
+     
+     <th>¿Eliminar?</th>
+     </tr></thead>
+
+     <tbody>
+     
+        
+        <tr class="form-row "
+             id="imagenes-0">
+        <td class="original">
+          
+          <input type="hidden" name="imagenes-0-id" id="id_imagenes-0-id">
+          <input type="hidden" name="imagenes-0-equipo" value="7" id="id_imagenes-0-equipo">
+        </td>
+        
+          
+            
+              <td class="field-imagen">
+              
+                  
+                  <input type="file" name="imagenes-0-imagen" accept="image/*" id="id_imagenes-0-imagen">
+              
+              </td>
+            
+          
+            
+              <td class="field-descripcion">
+              
+                  
+                  <input type="text" name="imagenes-0-descripcion" class="vTextField" maxlength="150" aria-describedby="id_imagenes-0-descripcion_helptext" id="id_imagenes-0-descripcion">
+              
+              </td>
+            
+          
+            
+              <td class="field-es_principal">
+              
+                  
+                  <input type="checkbox" name="imagenes-0-es_principal" id="id_imagenes-0-es_principal">
+              
+              </td>
+            
+          
+            
+              <td class="field-foto_preview">
+              
+                  <p><span style="color: #aaa; font-size: 11px;">Sin imagen</span></p>
+              
+              </td>
+            
+          
+        
+        <td class="delete"></td>
+        </tr>
+     
+        
+        <tr class="form-row "
+             id="imagenes-1">
+        <td class="original">
+          
+          <input type="hidden" name="imagenes-1-id" id="id_imagenes-1-id">
+          <input type="hidden" name="imagenes-1-equipo" value="7" id="id_imagenes-1-equipo">
+        </td>
+        
+          
+            
+              <td class="field-imagen">
+              
+                  
+                  <input type="file" name="imagenes-1-imagen" accept="image/*" id="id_imagenes-1-imagen">
+              
+              </td>
+            
+          
+            
+              <td class="field-descripcion">
+              
+                  
+                  <input type="text" name="imagenes-1-descripcion" class="vTextField" maxlength="150" aria-describedby="id_imagenes-1-descripcion_helptext" id="id_imagenes-1-descripcion">
+              
+              </td>
+            
+          
+            
+              <td class="field-es_principal">
+              
+                  
+                  <input type="checkbox" name="imagenes-1-es_principal" id="id_imagenes-1-es_principal">
+              
+              </td>
+            
+          
+            
+              <td class="field-foto_preview">
+              
+                  <p><span style="color: #aaa; font-size: 11px;">Sin imagen</span></p>
+              
+              </td>
+            
+          
+        
+        <td class="delete"></td>
+        </tr>
+     
+        
+        <tr class="form-row  empty-form"
+             id="imagenes-empty">
+        <td class="original">
+          
+          <input type="hidden" name="imagenes-__prefix__-id" id="id_imagenes-__prefix__-id">
+          <input type="hidden" name="imagenes-__prefix__-equipo" value="7" id="id_imagenes-__prefix__-equipo">
+        </td>
+        
+          
+            
+              <td class="field-imagen">
+              
+                  
+                  <input type="file" name="imagenes-__prefix__-imagen" accept="image/*" id="id_imagenes-__prefix__-imagen">
+              
+              </td>
+            
+          
+            
+              <td class="field-descripcion">
+              
+                  
+                  <input type="text" name="imagenes-__prefix__-descripcion" class="vTextField" maxlength="150" aria-describedby="id_imagenes-__prefix__-descripcion_helptext" id="id_imagenes-__prefix__-descripcion">
+              
+              </td>
+            
+          
+            
+              <td class="field-es_principal">
+              
+                  
+                  <input type="checkbox" name="imagenes-__prefix__-es_principal" id="id_imagenes-__prefix__-es_principal">
+              
+              </td>
+            
+          
+            
+              <td class="field-foto_preview">
+              
+                  <p><span style="color: #aaa; font-size: 11px;">Sin imagen</span></p>
+              
+              </td>
+            
+          
+        
+        <td class="delete"></td>
+        </tr>
+     
+     </tbody>
+    </table>
+  </div>
+  
+</fieldset>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="submit-row">
+
+<input type="submit" value="Grabar" class="default" name="_save">
+
+<input type="submit" value="Grabar y añadir otro" name="_addanother">
+<input type="submit" value="Grabar y continuar editando" name="_continue">
+
+
+    
+    <a role="button" href="/admin/inventario/equipo/7/delete/" class="deletelink">Eliminar</a>
+
+
+</div>
+
+
+
+    <script id="django-admin-form-add-constants"
+            src="/static/admin/js/change_form.js"
+            
+            
+            async>
+    </script>
+
+
+
+
+<script id="django-admin-prepopulated-fields-constants"
+        src="/static/admin/js/prepopulate_init.js"
+        data-prepopulated-fields="[]"
+        >
+</script>
+
+
+</div>
+</form></div>
+
+          
+          <br class="clear">
+        </div>
+        <!-- END Content -->
+      </main>
+    </div>
+    <footer id="footer"></footer>
+</div>
+<!-- END Container -->
+
+<!-- SVGs -->
+<svg xmlns="http://www.w3.org/2000/svg" class="base-svgs">
+  <symbol viewBox="0 0 24 24" id="icon-auto"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/></symbol>
+  <symbol viewBox="0 0 24 24" id="icon-moon"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol>
+  <symbol viewBox="0 0 24 24" id="icon-sun"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol>
+</svg>
+<!-- END SVGs -->
+
+</body>
+</html>

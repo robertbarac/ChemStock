@@ -1,0 +1,145 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Equipos de Laboratorio (Fotos) | GIQYMA UDC{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+        <h2 class="h3 fw-bold mb-1">Equipos &amp; Instrumentación Científica</h2>
+        <p class="text-muted mb-0">Catálogo visual con soporte para múltiples fotografías por equipo (vistas, accesorios y placas de activo).</p>
+    </div>
+    <div>
+        {% if user.is_staff or user.is_superuser %}
+            <a href="/admin/inventario/equipo/add/" target="_blank" class="btn btn-primary fw-semibold shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> + Añadir Equipo / Subir Fotos
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Filtros -->
+<div class="card p-3 mb-4 bg-light border">
+    <form method="get" class="row g-2 align-items-center">
+        <div class="col-md-3">
+            <input type="text" name="q" value="{{ query }}" class="form-control form-control-sm" placeholder="Buscar por nombre, serial, placa...">
+        </div>
+        <div class="col-md-3">
+            <select name="marca" class="form-select form-select-sm">
+                <option value="">Todas las Marcas</option>
+                {% for m in marcas %}
+                    <option value="{{ m.id }}" {% if selected_marca == m.id|stringformat:"s" %}selected{% endif %}>{{ m.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="sede" class="form-select form-select-sm">
+                <option value="">Todas las Sedes</option>
+                {% for s in sedes %}
+                    <option value="{{ s.id }}" {% if selected_sede == s.id|stringformat:"s" %}selected{% endif %}>{{ s.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select name="estado" class="form-select form-select-sm">
+                <option value="">Todos los Estados</option>
+                <option value="Usado" {% if selected_estado == "Usado" %}selected{% endif %}>Usado</option>
+                <option value="Sin uso" {% if selected_estado == "Sin uso" %}selected{% endif %}>Sin uso</option>
+                <option value="Operativo" {% if selected_estado == "Operativo" %}selected{% endif %}>Operativo</option>
+                <option value="En mantenimiento" {% if selected_estado == "En mantenimiento" %}selected{% endif %}>En mantenimiento</option>
+            </select>
+        </div>
+        <div class="col-md-1 d-flex gap-1">
+            <button type="submit" class="btn btn-primary btn-sm w-100" title="Filtrar"><i class="bi bi-filter"></i></button>
+            <a href="{% url 'inventario:equipos_list' %}" class="btn btn-outline-secondary btn-sm" title="Limpiar"><i class="bi bi-x-circle"></i></a>
+        </div>
+    </form>
+</div>
+
+<!-- Grid de Equipos con Fotografías -->
+<div class="row g-4">
+    {% for eq in equipos %}
+    <div class="col-sm-6 col-lg-4 col-xl-3">
+        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden position-relative">
+            <!-- Imagen Destacada o Placeholder -->
+            {% if eq.imagen_destacada %}
+                <div class="position-relative">
+                    <a href="{% url 'inventario:equipo_detail' eq.id %}">
+                        <img src="{{ eq.imagen_destacada.url }}" alt="{{ eq.nombre }}" class="equipo-card-img w-100">
+                    </a>
+                    {% if eq.total_imagenes > 1 %}
+                        <span class="badge bg-dark bg-opacity-75 text-white position-absolute top-0 end-0 m-2 shadow-sm">
+                            <i class="bi bi-images me-1 text-warning"></i> {{ eq.total_imagenes }} fotos
+                        </span>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="equipo-placeholder text-center">
+                    <div>
+                        <i class="bi bi-camera fs-1 d-block mb-1 opacity-50"></i>
+                        <small class="text-secondary fw-semibold">Sin fotografías asignadas</small>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="card-body p-3 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge bg-light text-dark border">Cant: {{ eq.cantidad }}</span>
+                        {% if eq.estado == "Operativo" or eq.estado == "Sin uso" %}
+                            <span class="badge bg-success-subtle text-success border border-success-subtle">{{ eq.estado }}</span>
+                        {% elif eq.estado == "En mantenimiento" %}
+                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">{{ eq.estado }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle">{{ eq.estado }}</span>
+                        {% endif %}
+                    </div>
+
+                    <h5 class="card-title fw-bold text-dark fs-6 mb-1">
+                        <a href="{% url 'inventario:equipo_detail' eq.id %}" class="text-decoration-none text-dark hover-primary">
+                            {{ eq.nombre }}
+                        </a>
+                    </h5>
+                    <p class="text-primary small mb-2 fw-semibold">
+                        <i class="bi bi-tag me-1"></i>{{ eq.marca.nombre|default:"Genérico / No especificada" }}
+                    </p>
+
+                    <div class="small text-muted mb-2">
+                        <div><i class="bi bi-geo-alt me-1 text-danger"></i><strong>{{ eq.espacio.nombre }}</strong> ({{ eq.espacio.sede.nombre }})</div>
+                        {% if eq.ubicacion_interna %}
+                            <div class="text-secondary"><i class="bi bi-arrow-return-right me-1"></i>{{ eq.ubicacion_interna }}</div>
+                        {% endif %}
+                        {% if eq.placa_udc %}
+                            <div class="font-monospace mt-1"><i class="bi bi-upc-scan me-1"></i>Placa UDC: {{ eq.placa_udc }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="d-grid mb-2">
+                        <a href="{% url 'inventario:equipo_detail' eq.id %}" class="btn btn-outline-primary btn-sm fw-semibold">
+                            <i class="bi bi-eye me-1"></i> Ver Ficha &amp; Galería
+                        </a>
+                    </div>
+                    <!-- Footer de auditoría del equipo -->
+                    <div class="pt-2 border-top text-muted small d-flex justify-content-between align-items-center">
+                        <span title="Registrado por">
+                            <i class="bi bi-person-check text-primary me-1"></i>{{ eq.creado_por.username|default:"Sistema" }}
+                        </span>
+                        <span class="text-secondary" style="font-size: 11px;">
+                            {{ eq.fecha_registro|date:"d/m/Y"|default:"Inicial" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info text-center py-4">
+            <i class="bi bi-cpu fs-2 d-block mb-2"></i>
+            No se encontraron equipos de laboratorio con los filtros seleccionados.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

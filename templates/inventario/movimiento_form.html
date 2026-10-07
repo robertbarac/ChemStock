@@ -1,0 +1,65 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Registrar Salida / Consumo | GIQYMA UDC{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card p-4 shadow-sm border-0">
+            <h3 class="fw-bold mb-1 text-primary">Registrar Salida / Consumo</h3>
+            <p class="text-muted mb-4">Descarga de reactivo o insumo asociado a una investigación, tesis o práctica de laboratorio.</p>
+
+            {% if user.is_authenticated %}
+                <div class="alert alert-light border py-2 mb-3 small d-flex align-items-center gap-2">
+                    <i class="bi bi-shield-check text-success fs-5"></i>
+                    <div>
+                        Registrando como: <strong>{{ user.get_full_name|default:user.username }}</strong>
+                        <span class="text-muted">({{ user.username }})</span>
+                    </div>
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Nombre del Reactivo o Insumo:</label>
+                    <input type="text" name="item" class="form-control" placeholder="Ej: Diclorometano, Ácido sulfúrico, Tubos tapa lila..." required>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Cantidad Consumida:</label>
+                        <input type="text" name="cantidad" class="form-control" placeholder="Ej: 50 mL, 2 frascos, 1 caja" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Espacio / Laboratorio:</label>
+                        <select name="espacio" class="form-select">
+                            <option value="">-- Seleccionar Espacio --</option>
+                            {% for esp in espacios %}
+                                <option value="{{ esp.id }}">{{ esp.nombre }} ({{ esp.sede.nombre }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Proyecto / Tesis / Semillero:</label>
+                    <input type="text" name="proyecto" class="form-control" placeholder="Ej: Proyecto MinCiencias Hidrocarburos, Tesis Maestría...">
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Observaciones / Notas:</label>
+                    <textarea name="observaciones" class="form-control" rows="3" placeholder="Detalle del uso o ensayo..."></textarea>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{% url 'inventario:movimientos_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-warning fw-semibold px-4 text-dark shadow-sm">
+                        <i class="bi bi-check-circle me-1"></i> Guardar Movimiento
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

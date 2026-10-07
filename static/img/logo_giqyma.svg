@@ -1,0 +1,134 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 310" width="920" height="310">
+  <defs>
+    <!-- Filtro de sombra suave exterior -->
+    <filter id="badgeShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0b2e38" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- Filtro de sombra sutil para el texto -->
+    <filter id="textShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="1.5" stdDeviation="1.5" flood-color="#0c3d4a" flood-opacity="0.3"/>
+    </filter>
+
+    <!-- Gradiente del aro metálico / cromo exterior -->
+    <linearGradient id="chromeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="15%" stop-color="#cbd5e1"/>
+      <stop offset="35%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#64748b"/>
+      <stop offset="75%" stop-color="#e2e8f0"/>
+      <stop offset="90%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <!-- Gradiente de brillo superior metálico -->
+    <linearGradient id="metallicSheen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="30%" stop-color="#cbd5e1" stop-opacity="0.4"/>
+      <stop offset="70%" stop-color="#334155" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <!-- Fondo interior azul cielo suave / cian del óvalo -->
+    <radialGradient id="innerCyanGlow" cx="48%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#ebf9fc"/>
+      <stop offset="35%" stop-color="#c9edf4"/>
+      <stop offset="70%" stop-color="#9ad8e7"/>
+      <stop offset="100%" stop-color="#6bc2d5"/>
+    </radialGradient>
+
+    <!-- Gradiente de la hoja verde -->
+    <linearGradient id="leafFillGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="45%" stop-color="#4ade80"/>
+      <stop offset="85%" stop-color="#86efac"/>
+      <stop offset="100%" stop-color="#bbf7d0"/>
+    </linearGradient>
+
+    <linearGradient id="leafBorderGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#15803d"/>
+      <stop offset="70%" stop-color="#16a34a"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&amp;display=swap');
+    .giqyma-text {
+      font-family: 'Cormorant Garamond', 'Trajan Pro', 'Cinzel', 'Times New Roman', serif;
+      font-weight: 700;
+      font-size: 114px;
+      fill: #2d6674;
+      letter-spacing: 4px;
+      filter: url(#textShadow);
+    }
+  </style>
+
+  <!-- GRUPO PRINCIPAL CON SOMBRA -->
+  <g filter="url(#badgeShadow)">
+    <!-- 1. Borde más exterior: Teal oscuro / petróleo -->
+    <ellipse cx="460" cy="155" rx="448" ry="144" fill="#083a45" stroke="#05272e" stroke-width="2"/>
+
+    <!-- 2. Aro metálico plateado / cromo -->
+    <ellipse cx="460" cy="155" rx="443" ry="139" fill="url(#chromeGradient)" />
+    <!-- Capa de brillo metálico direccional -->
+    <ellipse cx="460" cy="155" rx="443" ry="139" fill="url(#metallicSheen)" opacity="0.6" />
+
+    <!-- 3. Aro interior teal fino delimitador -->
+    <ellipse cx="460" cy="155" rx="422" ry="122" fill="#005d70" stroke="#004757" stroke-width="1.5"/>
+
+    <!-- 4. Campo interior: Óvalo cian cielo radiante -->
+    <ellipse cx="460" cy="155" rx="417" ry="117" fill="url(#innerCyanGlow)" />
+
+    <!-- Destello de luz superior en el fondo cian -->
+    <ellipse cx="460" cy="100" rx="360" ry="55" fill="#ffffff" opacity="0.25"/>
+  </g>
+
+  <!-- TEXTO GIQYMA -->
+  <!-- Letras G I -->
+  <text x="175" y="188" class="giqyma-text">GI</text>
+
+  <!-- Letra Q con cuerpo y elegante cola swash extendida -->
+  <g>
+    <!-- Cuerpo de la Q -->
+    <text x="310" y="188" class="giqyma-text">Q</text>
+    <!-- Cola caligráfica distintiva que nace en la Q y fluye bajo Y y M -->
+    <path d="M 330 182 C 345 208, 385 228, 435 224 C 475 220, 505 198, 545 194 C 565 192, 575 197, 580 200 C 568 206, 545 208, 520 208 C 470 208, 435 236, 380 236 C 345 236, 320 216, 312 195 Z" 
+          fill="#2d6674" filter="url(#textShadow)" />
+  </g>
+
+  <!-- Letras Y M A -->
+  <text x="442" y="188" class="giqyma-text">YMA</text>
+
+  <!-- MOTIVO BOTÁNICO: HOJA VERDE -->
+  <g transform="translate(680, 150) rotate(-15)">
+    <!-- Tallo de la hoja -->
+    <path d="M -24 35 C -15 22, -8 10, 0 0" 
+          stroke="#15803d" stroke-width="5" stroke-linecap="round" fill="none" />
+    <path d="M -24 35 C -15 22, -8 10, 0 0" 
+          stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+    <!-- Limbo / Cuerpo de la hoja -->
+    <!-- Contorno y relleno de la hoja estilizada hacia arriba a la derecha -->
+    <path d="M 0 0 C 15 -25, 45 -45, 85 -55 C 80 -15, 60 25, 25 35 C 10 38, -5 20, 0 0 Z" 
+          fill="url(#leafFillGrad)" 
+          stroke="url(#leafBorderGrad)" 
+          stroke-width="3.5" 
+          stroke-linejoin="round"
+          filter="url(#textShadow)" />
+
+    <!-- Nervadura central -->
+    <path d="M 0 0 C 25 -15, 55 -32, 85 -55" 
+          stroke="#16a34a" stroke-width="3" stroke-linecap="round" fill="none" />
+
+    <!-- Nervaduras secundarias -->
+    <path d="M 20 -8 C 30 -22, 45 -30, 60 -36" 
+          stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.8" />
+    <path d="M 38 -18 C 50 -30, 65 -36, 75 -42" 
+          stroke="#22c55e" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.8" />
+    <path d="M 22 -6 C 28 8, 38 18, 50 20" 
+          stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.8" />
+    <path d="M 40 -16 C 46 -4, 58 5, 68 8" 
+          stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.8" />
+  </g>
+</svg>

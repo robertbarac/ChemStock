@@ -1,0 +1,73 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Iniciar Sesión - GIQYMA Inventario{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+            <div class="bg-primary bg-gradient p-4 text-center text-white" style="background: linear-gradient(135deg, #0a3d62 0%, #1e5f8a 100%) !important;">
+                <img src="{% static 'img/logo_giqyma.svg' %}" alt="Logo GIQYMA" height="58" class="mb-2" style="filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));">
+                <h4 class="fw-bold mb-0">Sistema de Inventario</h4>
+                <p class="text-white-50 small mb-0">Universidad de Cartagena - GIQYMA</p>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                <h5 class="fw-bold text-secondary mb-4 text-center">Acceso al Sistema</h5>
+
+                {% if form.errors %}
+                    <div class="alert alert-danger py-2 small" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                        Usuario o contraseña incorrectos. Por favor verifique sus credenciales.
+                    </div>
+                {% endif %}
+
+                {% if next %}
+                    {% if user.is_authenticated %}
+                        <div class="alert alert-warning py-2 small" role="alert">
+                            Su cuenta no tiene permisos para acceder a esta sección.
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label fw-semibold small text-muted">Nombre de Usuario</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                            <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" 
+                                   maxlength="150" required id="id_username" class="form-control" placeholder="Ej: admin o investigador">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label for="id_password" class="form-label fw-semibold small text-muted mb-0">Contraseña</label>
+                            <a href="{% url 'password_reset' %}" class="small text-decoration-none text-primary">¿Olvidó su contraseña?</a>
+                        </div>
+                        <div class="input-group mt-1">
+                            <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password" autocomplete="current-password" required id="id_password" class="form-control" placeholder="••••••••">
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="next" value="{{ next|default:'/' }}">
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary fw-semibold py-2" style="background-color: #0a3d62; border-color: #0a3d62;">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-4 pt-3 border-top text-center text-muted small">
+                    <p class="mb-1"><i class="bi bi-shield-check text-success me-1"></i> Acceso seguro por roles de laboratorio</p>
+                    <span class="badge bg-light text-secondary border">Superusuarios (Total)</span>
+                    <span class="badge bg-light text-secondary border ms-1">Investigadores (Add/View)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,175 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Reactivos, Estándares & Buffers | GIQYMA UDC{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+        <h2 class="h3 fw-bold mb-1">Reactivos, Estándares y Buffers</h2>
+        <p class="text-muted mb-0">Control de sustancias químicas, patrones cromatográficos y soluciones de calibración.</p>
+    </div>
+    <div class="d-flex gap-2">
+        {% if user.is_staff or user.is_superuser %}
+            <a href="/admin/inventario/reactivo/add/" target="_blank" class="btn btn-primary fw-semibold shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> + Registrar Reactivo
+            </a>
+        {% endif %}
+        <a href="{% url 'inventario:registrar_consumo' %}" class="btn btn-warning fw-semibold shadow-sm text-dark">
+            <i class="bi bi-dash-circle me-1"></i> Registrar Salida / Consumo
+        </a>
+    </div>
+</div>
+
+<!-- Filtros -->
+<div class="card p-3 mb-4 bg-light border">
+    <form method="get" class="row g-2 align-items-center">
+        <div class="col-md-3">
+            <input type="text" name="q" value="{{ query }}" class="form-control form-control-sm" placeholder="Buscar por nombre, lote o ref...">
+        </div>
+        <div class="col-md-2">
+            <select name="tipo" class="form-select form-select-sm">
+                <option value="">Todos los Tipos</option>
+                <option value="ESTANDAR" {% if selected_tipo == "ESTANDAR" %}selected{% endif %}>Estándar</option>
+                <option value="BUFFER" {% if selected_tipo == "BUFFER" %}selected{% endif %}>Buffer</option>
+                <option value="REACTIVO" {% if selected_tipo == "REACTIVO" %}selected{% endif %}>Reactivo</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select name="marca" class="form-select form-select-sm">
+                <option value="">Todas las Marcas</option>
+                {% for m in marcas %}
+                    <option value="{{ m.id }}" {% if selected_marca == m.id|stringformat:"s" %}selected{% endif %}>{{ m.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select name="espacio" class="form-select form-select-sm">
+                <option value="">Todos los Espacios</option>
+                {% for esp in espacios %}
+                    <option value="{{ esp.id }}" {% if selected_espacio == esp.id|stringformat:"s" %}selected{% endif %}>{{ esp.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select name="estado" class="form-select form-select-sm">
+                <option value="">Todos los Estados</option>
+                <option value="Sin uso" {% if selected_estado == "Sin uso" %}selected{% endif %}>Sin uso</option>
+                <option value="Usado" {% if selected_estado == "Usado" %}selected{% endif %}>Usado</option>
+                <option value="En uso" {% if selected_estado == "En uso" %}selected{% endif %}>En uso</option>
+                <option value="Agotado" {% if selected_estado == "Agotado" %}selected{% endif %}>Agotado</option>
+            </select>
+        </div>
+        <div class="col-md-1 d-flex gap-1">
+            <button type="submit" class="btn btn-primary btn-sm w-100" title="Filtrar"><i class="bi bi-filter"></i></button>
+            <a href="{% url 'inventario:reactivos_list' %}" class="btn btn-outline-secondary btn-sm" title="Limpiar"><i class="bi bi-x-circle"></i></a>
+        </div>
+    </form>
+</div>
+
+<!-- Tabla -->
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Nombre / Sustancia</th>
+                        <th>Marca</th>
+                        <th>Presentación / Cantidad</th>
+                        <th>Lote</th>
+                        <th>Referencia</th>
+                        <th>Fecha Exp.</th>
+                        <th>Estado</th>
+                        <th>Ubicación</th>
+                        <th>Registrado por</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reactivos %}
+                    <tr>
+                        <td>
+                            {% if r.tipo == 'ESTANDAR' %}
+                                <span class="badge text-white" style="background-color: #6f42c1;">Estándar</span>
+                            {% elif r.tipo == 'BUFFER' %}
+                                <span class="badge bg-primary">Buffer</span>
+                            {% else %}
+                                <span class="badge bg-success">Reactivo</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <strong>{{ r.nombre }}</strong>
+                            {% if r.clasificacion %}
+                                <br><small class="badge bg-light text-secondary border">{{ r.clasificacion }}</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if r.marca %}
+                                <span class="badge bg-light text-dark border">{{ r.marca.nombre }}</span>
+                            {% else %}
+                                <span class="text-muted">-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <strong>{{ r.cantidad|default:"-" }}</strong>
+                            {% if r.unidades and r.unidades != "1" %}
+                                <span class="text-muted small">({{ r.unidades }} unids)</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if r.lote %}
+                                <span class="font-monospace text-dark">{{ r.lote }}</span>
+                            {% else %}
+                                <span class="text-muted">-</span>
+                            {% endif %}
+                        </td>
+                        <td><small class="text-muted font-monospace">{{ r.referencia|default:"-" }}</small></td>
+                        <td>
+                            {% if r.fecha_expedicion %}
+                                {{ r.fecha_expedicion|date:"d/m/Y" }}
+                            {% else %}
+                                <span class="text-muted">-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if r.estado_uso == 'Sin uso' %}
+                                <span class="badge bg-success">Sin uso</span>
+                            {% elif r.estado_uso == 'Usado' %}
+                                <span class="badge bg-warning text-dark">Usado</span>
+                            {% elif r.estado_uso == 'En uso' %}
+                                <span class="badge bg-info text-dark">En uso</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ r.estado_uso }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <small class="d-block fw-semibold text-secondary">{{ r.espacio.nombre }}</small>
+                            <small class="text-muted">{{ r.espacio.sede.nombre }}</small>
+                            {% if r.ubicacion_interna %}
+                                <br><small class="text-primary"><i class="bi bi-geo-alt"></i> {{ r.ubicacion_interna }}</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if r.creado_por %}
+                                <span class="badge bg-light text-secondary border" title="Registrado por {{ r.creado_por.username }}">
+                                    <i class="bi bi-person me-1"></i>{{ r.creado_por.username }}
+                                </span>
+                            {% else %}
+                                <span class="text-muted small">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="text-center py-4 text-muted">
+                            <i class="bi bi-inbox fs-2 d-block mb-1"></i>
+                            No se encontraron reactivos o estándares con los filtros aplicados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

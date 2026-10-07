@@ -1,0 +1,73 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Kardex de Movimientos | GIQYMA UDC{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+        <h2 class="h3 fw-bold mb-1">Kardex de Movimientos y Salidas</h2>
+        <p class="text-muted mb-0">Trazabilidad de consumos para proyectos, salidas a campo y traslados de material.</p>
+    </div>
+    <div>
+        <a href="{% url 'inventario:registrar_consumo' %}" class="btn btn-warning fw-semibold shadow-sm text-dark">
+            <i class="bi bi-dash-circle me-1"></i> Registrar Salida / Consumo
+        </a>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Fecha y Hora</th>
+                        <th>Tipo</th>
+                        <th>Artículo / Insumo</th>
+                        <th>Cantidad</th>
+                        <th>Proyecto / Tesis</th>
+                        <th>Registrado por</th>
+                        <th>Espacio Origen</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in movimientos %}
+                    <tr>
+                        <td><small class="text-muted fw-semibold">{{ m.fecha_hora|date:"d/m/Y H:i" }}</small></td>
+                        <td>
+                            {% if m.tipo == 'SALIDA_CONSUMO' %}
+                                <span class="badge bg-primary">Consumo</span>
+                            {% elif m.tipo == 'INGRESO_COMPRA' %}
+                                <span class="badge bg-success">Ingreso</span>
+                            {% elif m.tipo == 'ROTURA_BAJA' %}
+                                <span class="badge bg-danger">Rotura</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ m.get_tipo_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td><strong>{{ m.item_descripcion }}</strong></td>
+                        <td class="fw-bold text-dark">{{ m.cantidad }}</td>
+                        <td>{{ m.proyecto|default:"-" }}</td>
+                        <td>
+                            <span class="badge bg-light text-secondary border">
+                                <i class="bi bi-person me-1"></i>{{ m.usuario.username|default:"Sistema" }}
+                            </span>
+                        </td>
+                        <td><small>{{ m.espacio_origen.nombre|default:"-" }}</small></td>
+                        <td><small class="text-muted">{{ m.observaciones|default:"-" }}</small></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-5">
+                            <i class="bi bi-journal-arrow-down fs-2 d-block mb-2 text-secondary"></i>
+                            No hay movimientos registrados aún en el Kardex.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
