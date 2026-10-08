@@ -5,6 +5,7 @@ from django.db.models import Q
 from inventario.models import Equipo, ImagenEquipo, Marca
 from sedes.models import Sede, Espacio
 
+@login_required
 def equipos_list_view(request):
     query = request.GET.get("q", "").strip()
     marca_id = request.GET.get("marca", "")
@@ -51,6 +52,7 @@ def equipos_list_view(request):
     }
     return render(request, "inventario/equipos_list.html", context)
 
+@login_required
 def equipo_detail_view(request, pk):
     equipo = get_object_or_404(
         Equipo.objects.select_related("espacio__sede", "marca", "creado_por").prefetch_related("imagenes"),
@@ -58,6 +60,7 @@ def equipo_detail_view(request, pk):
     )
     return render(request, "inventario/equipo_detail.html", {"equipo": equipo})
 
+@login_required
 def subir_fotos_equipo_view(request, pk):
     """Permite subir múltiples imágenes a un equipo directamente desde el sitio web."""
     equipo = get_object_or_404(Equipo, pk=pk)
@@ -84,6 +87,7 @@ def subir_fotos_equipo_view(request, pk):
 
     return redirect("inventario:equipo_detail", pk=pk)
 
+@login_required
 def eliminar_foto_equipo_view(request, pk):
     """Permite eliminar una fotografía de la galería del equipo desde el sitio web."""
     imagen_obj = get_object_or_404(ImagenEquipo, pk=pk)
@@ -97,6 +101,7 @@ def eliminar_foto_equipo_view(request, pk):
 
     return redirect("inventario:equipo_detail", pk=equipo_id)
 
+@login_required
 def marcar_foto_principal_view(request, pk):
     """Marca una imagen como foto principal / portada del equipo."""
     imagen_obj = get_object_or_404(ImagenEquipo, pk=pk)

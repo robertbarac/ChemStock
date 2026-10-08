@@ -1,8 +1,10 @@
 ﻿from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from inventario.models import Reactivo, Equipo, Material, Movimiento
 from sedes.models import Sede, Espacio
 
+@login_required
 def dashboard_view(request):
     total_reactivos = Reactivo.objects.count()
     reactivos_en_uso = Reactivo.objects.filter(estado_uso__in=["Usado", "En uso"]).count()
@@ -18,8 +20,8 @@ def dashboard_view(request):
     sedes = Sede.objects.prefetch_related("espacios").all()
 
     # Muestras recientes de cada categoría
-    ultimos_reactivos = Reactivo.objects.select_related("espacio__sede").order_by("-id")[:5]
-    ultimos_equipos = Equipo.objects.select_related("espacio__sede").order_by("-id")[:5]
+    ultimos_reactivos = Reactivo.objects.select_related("espacio__sede", "creado_por").order_by("-id")[:5]
+    ultimos_equipos = Equipo.objects.select_related("espacio__sede", "creado_por").order_by("-id")[:5]
 
     context = {
         "total_reactivos": total_reactivos,

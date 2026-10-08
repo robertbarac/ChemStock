@@ -1,8 +1,10 @@
 ﻿from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from inventario.models import Reactivo, Marca
 from sedes.models import Sede, Espacio
 
+@login_required
 def reactivos_list_view(request):
     query = request.GET.get("q", "").strip()
     tipo = request.GET.get("tipo", "")
@@ -11,7 +13,7 @@ def reactivos_list_view(request):
     espacio_id = request.GET.get("espacio", "")
     estado = request.GET.get("estado", "")
 
-    reactivos = Reactivo.objects.select_related("espacio__sede", "marca")
+    reactivos = Reactivo.objects.select_related("espacio__sede", "marca", "creado_por")
 
     if query:
         reactivos = reactivos.filter(
@@ -55,6 +57,7 @@ def reactivos_list_view(request):
     }
     return render(request, "inventario/reactivos_list.html", context)
 
+@login_required
 def reactivo_detail_view(request, pk):
-    reactivo = get_object_or_404(Reactivo.objects.select_related("espacio__sede", "marca"), pk=pk)
+    reactivo = get_object_or_404(Reactivo.objects.select_related("espacio__sede", "marca", "creado_por"), pk=pk)
     return render(request, "inventario/reactivo_detail.html", {"reactivo": reactivo})

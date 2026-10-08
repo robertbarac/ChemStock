@@ -1,8 +1,10 @@
 ﻿from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from inventario.models import Movimiento
 from sedes.models import Espacio
 
+@login_required
 def movimientos_list_view(request):
     tipo = request.GET.get("tipo", "")
     movimientos = Movimiento.objects.select_related("usuario", "espacio_origen", "espacio_destino")
@@ -16,6 +18,7 @@ def movimientos_list_view(request):
     }
     return render(request, "inventario/movimientos_list.html", context)
 
+@login_required
 def registrar_consumo_view(request):
     espacios = Espacio.objects.select_related("sede").all()
 
@@ -29,15 +32,10 @@ def registrar_consumo_view(request):
         if not item_nombre or not cantidad:
             messages.error(request, "El artículo y la cantidad son requeridos.")
         else:
-            user = request.user if request.user.is_authenticated else None
-            from django.contrib.auth.models import User
-            if not user:
-                user = User.objects.first()
-
             espacio_obj = Espacio.objects.filter(pk=espacio_id).first() if espacio_id else None
 
             Movimiento.objects.create(
-                usuario=user,
+                usuario=request.user,
                 tipo="SALIDA_CONSUMO",
                 item_descripcion=item_nombre,
                 cantidad=cantidad,

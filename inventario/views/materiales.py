@@ -1,8 +1,10 @@
 ﻿from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from inventario.models import Material
 from sedes.models import Sede, Espacio
 
+@login_required
 def materiales_list_view(request):
     query = request.GET.get("q", "").strip()
     categoria = request.GET.get("categoria", "")
@@ -10,7 +12,7 @@ def materiales_list_view(request):
     espacio_id = request.GET.get("espacio", "")
     estado = request.GET.get("estado", "")
 
-    materiales = Material.objects.select_related("espacio__sede")
+    materiales = Material.objects.select_related("espacio__sede", "creado_por")
 
     if query:
         materiales = materiales.filter(
