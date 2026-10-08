@@ -175,3 +175,10 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/django
+# Backups y volcados de base de datos (fixtures)
+datos_inventario.json
+datos_*.json
+backup_*.json
+*.json
+!package.json
+!tsconfig.json
